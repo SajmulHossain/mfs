@@ -2,7 +2,7 @@
 
 const AgentLayout = () => {
   return (
-    <div>
+    <div className="layout">
       agent layout
     </div>
   );

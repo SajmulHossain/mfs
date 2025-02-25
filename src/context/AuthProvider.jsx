@@ -14,6 +14,7 @@ const AuthProvider = ({ children }) => {
       const { data } = await axiosSecure("/user");
       if (data?.success) {
         setUser(data?.user);
+        setRole(data?.role || data?.user?.role)
       } else {
         setUser(null);
       }

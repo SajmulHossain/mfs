@@ -2,9 +2,9 @@
 
 const AdminLayout = () => {
   return (
-    <div>admin layout
-      
-    </div>
+    <section className="layout">
+      admin layout
+    </section>
   );
 };
 
