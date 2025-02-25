@@ -7,6 +7,10 @@
   .layout {
     @apply max-w-[450px] mx-auto border-8 border-second rounded-4xl px-5 py-4 h-[600px] mt-10;
   }
+
+  .btn {
+    @apply flex justify-center items-center gap-2;
+  }
 }
 
 @theme {
