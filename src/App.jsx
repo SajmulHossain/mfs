@@ -8,13 +8,13 @@ import { useEffect } from "react";
 
 
 const App = () => {
- const { role, loading } = useAuth();
+ const { role, isLoading } = useAuth();
  useEffect(() => {
   initFlowbite();
  },[])
 
- if(loading) {
-  return <Loading />
+ if (isLoading) {
+   return <Loading />;
  }
  
   if(role === 'user') {

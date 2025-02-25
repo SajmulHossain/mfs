@@ -2,9 +2,11 @@ import { FaBars } from "react-icons/fa";
 import useAuth from "../hooks/useAuth";
 import { MdOutlineManageAccounts, MdOutlineRealEstateAgent } from "react-icons/md";
 import { BsCashCoin } from "react-icons/bs";
+import { useState } from "react";
 
 const AdminLayout = () => {
   const { user } = useAuth();
+  const [showAmount, setShowAmount] = useState(false);
   return (
     <section className="layout relative hide-scrollbar">
       <div className="flex justify-between items-center border-b pb-4 border-second">
@@ -20,9 +22,9 @@ const AdminLayout = () => {
             <FaBars />
           </button>
 
-          <p className="bg-main w-fit rounded-md px-2 py-1 text-white h-auto max-w-lg transition-all duration-300 blur-xs cursor-pointer hover:blur-none">
+          <button className="bg-main w-fit rounded-md px-2 py-1 text-white h-auto max-w-lg transition-all duration-300 blur-xs cursor-pointer hover:blur-none">
             {user?.balance}
-          </p>
+          </button>
         </div>
         <p className="font-bold">{user?.name}</p>
       </div>

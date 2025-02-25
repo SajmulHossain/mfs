@@ -4,9 +4,9 @@ import useAuth from "../hooks/useAuth";
 
 
 const PrivetRoute = ({children}) => {
-  const { user, loading} = useAuth();
-  if(!loading && !user) {
-    return <Navigate to='/login' replace={true} />
+  const { user, isLoading} = useAuth();
+  if (!user && !isLoading) {
+    return <Navigate to="/login" replace={true} />;
   }
   return children;
 };

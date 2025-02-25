@@ -1,36 +1,31 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AuthContext from "./AuthContext";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
   const axiosSecure = useAxiosSecure();
   const [role, setRole] = useState('');
 
-  useEffect(() => {
-    const checkUser = async () => {
+  const { isLoading } = useQuery({
+    queryKey: ['user'],
+    queryFn: async() => {
       const { data } = await axiosSecure("/user");
       if (data?.success) {
         setUser(data?.user);
-        setRole(data?.role || data?.user?.role)
+        setRole(data?.role || data?.user?.role);
       } else {
         setUser(null);
       }
-    };
 
-    try {
-      checkUser();
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
+      return data || {};
     }
-  }, []);
+  })
 
   const data = {
-    loading,
+    isLoading,
     user,
     setUser,
     role,
