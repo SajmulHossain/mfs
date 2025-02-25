@@ -2,11 +2,22 @@ import { FaBars } from "react-icons/fa";
 import useAuth from "../hooks/useAuth";
 import { MdOutlineManageAccounts, MdOutlineRealEstateAgent } from "react-icons/md";
 import { BsCashCoin } from "react-icons/bs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const AdminLayout = () => {
   const { user } = useAuth();
   const [showAmount, setShowAmount] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowAmount(false);
+    }, 2000)
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  },[showAmount])
+
   return (
     <section className="layout relative hide-scrollbar">
       <div className="flex justify-between items-center border-b pb-4 border-second">
@@ -22,7 +33,10 @@ const AdminLayout = () => {
             <FaBars />
           </button>
 
-          <button className="bg-main w-fit rounded-md px-2 py-1 text-white h-auto max-w-lg transition-all duration-300 blur-xs cursor-pointer hover:blur-none">
+          <button
+            onClick={() => setShowAmount(true)}
+            className={`bg-main w-fit rounded-md px-2 py-1 text-white h-auto max-w-lg transition-all duration-300 cursor-pointer ${showAmount ? 'blur-none' : 'blur-sm'}`}
+          >
             {user?.balance}
           </button>
         </div>
