@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@layer components {
+  .layout {
+    @apply max-w-[450px] mx-auto border-8 border-second rounded-4xl px-5 py-4 h-[600px] mt-10;
+  }
+}
+
+@theme {
+  --color-main: #009432;
+  --color-second: #0652DD;
+}
