@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useEffect } from "react";
 
 
 export const axiosSecure = axios.create({
@@ -8,7 +9,19 @@ export const axiosSecure = axios.create({
 
 
 const useAxiosSecure = () => {
-  console.log('kire');
+  useEffect(() => {
+    axiosSecure.interceptors.response.use(res => {
+      return res
+    }, async error => {
+      if(error.response?.status === 401 || error.response?.status === 403) {
+        console.log('kire');
+      }
+
+      return Promise.reject(error)
+    })
+  },[])
+
+  return axiosSecure;
 };
 
 export default useAxiosSecure;

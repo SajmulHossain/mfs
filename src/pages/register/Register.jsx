@@ -10,11 +10,19 @@ const Register = () => {
   const navigate = useNavigate();
   const {mutateAsync, isPending} = useMutation({
     mutationKey: ['user'],
-    mutationFn: async userData => {
+    mutationFn: async ({data:userData, form}) => {
       const {data} = await axiosSecure.post('/users', userData);
       if(data?.success) {
         toast.success('Registration Successful!');
-      } else {
+        navigate("/login");
+        form.reset();
+      } else if (data?.error) {
+        const message = data?.error.split("dup key:")[1];
+        if(message) {
+           const cleanMsg = message.replace(/[{}]/g, "");
+           const msgArray = cleanMsg.split(":");
+          return error(`The ${msgArray[0]} is already exist!`);
+        }       
         error();
       }
     }
@@ -58,11 +66,9 @@ const Register = () => {
     }
 
     try {
-      await mutateAsync(data);
-      form.reset();
-      navigate('/login');
-    } catch (err) {
-      console.log(err);
+      await mutateAsync({data, form});
+    } catch ({response}) {
+      error(response?.data?.message);
     }
   }
   return (
@@ -168,7 +174,7 @@ const Register = () => {
 
         <button
           type="submit"
-          disabled={isPending}
+          // disabled={isPending}
           className="btn text-white bg-second/90 cursor-pointer w-full hover:bg-second focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
         >
           Register new account {isPending && <Loading crud={true} />}
