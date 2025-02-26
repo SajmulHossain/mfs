@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 const AdminLayout = () => {
   const { user } = useAuth();
   const [showAmount, setShowAmount] = useState(false);
+  const [sidebarOn, setSidebarOn] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -23,6 +24,7 @@ const AdminLayout = () => {
       <div className="flex justify-between items-center border-b pb-4 border-second">
         <div className="flex items-center gap-2">
           <button
+          onClick={() => setSidebarOn(true)}
             className="text-white bg-second/90 hover:bg-second focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
             type="button"
             data-drawer-target="drawer-disable-body-scrolling"
@@ -35,7 +37,9 @@ const AdminLayout = () => {
 
           <button
             onClick={() => setShowAmount(true)}
-            className={`bg-main w-fit rounded-md px-2 py-1 text-white h-auto max-w-lg transition-all duration-300 cursor-pointer ${showAmount ? 'blur-none' : 'blur-sm'}`}
+            className={`bg-main w-fit rounded-md px-2 py-1 text-white h-auto max-w-lg transition-all duration-300 cursor-pointer ${
+              showAmount ? "blur-none" : "blur-sm"
+            }`}
           >
             {user?.balance}
           </button>
@@ -45,7 +49,9 @@ const AdminLayout = () => {
 
       <div
         id="drawer-disable-body-scrolling"
-        className="absolute top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-64 dark:bg-gray-800"
+        className={`absolute top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform ${
+          sidebarOn ? "" : "-translate-x-full"
+        } bg-white w-64 dark:bg-gray-800`}
         tabIndex="-1"
         aria-labelledby="drawer-disable-body-scrolling-label"
       >
@@ -57,6 +63,7 @@ const AdminLayout = () => {
         </h5>
         <button
           type="button"
+          onClick={() => setSidebarOn(false)}
           data-drawer-hide="drawer-disable-body-scrolling"
           aria-controls="drawer-disable-body-scrolling"
           className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white"
