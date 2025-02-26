@@ -1,9 +1,8 @@
 import { FaBars } from "react-icons/fa";
 import useAuth from "../hooks/useAuth";
-import { MdOutlineManageAccounts, MdOutlineRealEstateAgent } from "react-icons/md";
-import { BsCashCoin } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import Loading from "../components/Loading";
+import { Outlet } from "react-router-dom";
 
 const AdminLayout = () => {
   const { user,loggingOut, logout } = useAuth();
@@ -121,21 +120,7 @@ const AdminLayout = () => {
       </div>
 
       {/* main section */}
-      <div className="flex justify-between flex-wrap">
-        <button className="btn flex-col gap-0 transition-all duration-200 hover:bg-main/20 p-4 rounded-md">
-          <MdOutlineManageAccounts size={60} />
-          <span className="font-semibold text-xs">Manage Users</span>
-        </button>
-
-        <button className="btn flex-col transition-all duration-200 gap-0 hover:bg-main/20 p-4 rounded-md">
-          <MdOutlineRealEstateAgent size={60} />
-          <span className="font-semibold text-xs">Agent Request</span>
-        </button>
-        <button className="btn flex-col transition-all duration-200 gap-0 hover:bg-main/20 p-4 rounded-md">
-          <BsCashCoin size={60} />
-          <span className="font-semibold text-xs">Cash In Request</span>
-        </button>
-      </div>
+      <Outlet />
     </section>
   );
 };
