@@ -4,12 +4,23 @@ import Loading from "../components/Loading";
 import { FaBars } from "react-icons/fa";
 import { TbCoinTaka } from "react-icons/tb";
 import { IoNotificationsOutline } from "react-icons/io5";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const CommonLayout = () => {
   const { user, loggingOut, logout } = useAuth();
   const [sidebarOn, setSidebarOn] = useState(false);
   const [showAmount, setShowAmount] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
+  const axiosSecure = useAxiosSecure();
+
+  const {data:notifications=[], isLoading} = useQuery({
+    queryKey: ['notifications'],
+    queryFn: async () => {
+      const { data } = await axiosSecure('/notifications');
+      return data;
+    }
+  })
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -54,6 +65,11 @@ const CommonLayout = () => {
 
         <div className={`absolute right-0 top-10 w-[250px] min-h-[200px] bg-main p-2 rounded-md text-white ${showNotification ? 'block' : 'hidden'}`}>
           <p className="font-semibold border-b">Notifications</p>
+          {
+            notifications?.length ? '':<div className="flex justify-center items-center min-h-[150px]">
+              <p>No notifications found...</p>
+            </div>
+          }
         </div>
       </div>
 
