@@ -5,20 +5,27 @@ import useAuth from "./hooks/useAuth";
 import Loading from "./components/Loading";
 import { initFlowbite } from "flowbite";
 import { useEffect } from "react";
+import BlockAgent from "./layout/AgentPages/BlockAgent";
+import Disabled from "./pages/Disabled";
 
 
 const App = () => {
- const { role, isLoading, isdisabled } = useAuth();
+ const { role, isLoading, isDisabled, user } = useAuth();
  useEffect(() => {
   initFlowbite();
  },[])
+
 
  if (isLoading) {
    return <Loading />;
  }
 
- if(isdisabled) {
-  return 
+ if (isDisabled) {
+   return <Disabled />;
+ }
+
+ if(role === 'agent' && user?.agentStatus === 'pending') {
+  return <BlockAgent />
  }
  
   if(role === 'user') {

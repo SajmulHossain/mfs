@@ -6,6 +6,7 @@ import PrivetRoute from "./PrivetRoute";
 import AdminRoute from "./AdminRoute";
 import Users from "../layout/AdminPages/Users";
 import Home from "../pages/Home";
+import AgentRequest from "../layout/AdminPages/AgentRequest";
 
 
 const routes = createBrowserRouter([
@@ -29,6 +30,12 @@ const routes = createBrowserRouter([
           </AdminRoute>
         ),
       },
+      {
+        path: '/agent-requests',
+        element: <AdminRoute>
+          <AgentRequest />
+        </AdminRoute>
+      }
     ],
   },
   {

@@ -10,14 +10,14 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const axiosSecure = useAxiosSecure();
   const [role, setRole] = useState('');
-  const [isdisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const { isLoading } = useQuery({
     queryKey: ['user'],
     queryFn: async() => {
       const { data } = await axiosSecure("/user");
       if (data?.success) {
-        setIsDisabled(data?.isdisabled);
+        setIsDisabled(data?.isDisabled);
         setUser(data?.user);
         setRole(data?.role || data?.user?.role);
       } else {
@@ -49,7 +49,7 @@ const AuthProvider = ({ children }) => {
     setRole,
     logout,
     loggingOut,
-    isdisabled,
+    isDisabled,
   };
 
   return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;

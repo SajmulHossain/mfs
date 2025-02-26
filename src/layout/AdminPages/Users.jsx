@@ -92,9 +92,6 @@ const Users = () => {
               <th scope="col" className="px-6 py-3">
                 Block
               </th>
-              <th scope="col" className="px-6 py-3">
-                <span className="sr-only">Edit</span>
-              </th>
             </tr>
           </thead>
           <tbody>

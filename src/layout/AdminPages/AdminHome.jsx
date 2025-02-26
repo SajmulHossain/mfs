@@ -15,10 +15,10 @@ const AdminHome = () => {
         <span className="font-semibold text-xs">Manage Users</span>
       </Link>
 
-      <button className="btn justify-self-center flex-col transition-all duration-200 gap-0 hover:bg-main/20 p-4 rounded-md">
+      <Link to='/agent-requests' className="btn justify-self-center flex-col transition-all duration-200 gap-0 hover:bg-main/20 p-4 rounded-md">
         <MdOutlineRealEstateAgent size={60} />
         <span className="font-semibold text-xs">Agent Request</span>
-      </button>
+      </Link>
       <button className="btn justify-self-center flex-col transition-all duration-200 gap-0 hover:bg-main/20 p-4 rounded-md">
         <BsCashCoin size={60} />
         <span className="font-semibold text-xs">Cash In Request</span>
