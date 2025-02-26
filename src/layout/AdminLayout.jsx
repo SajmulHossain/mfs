@@ -3,9 +3,10 @@ import useAuth from "../hooks/useAuth";
 import { MdOutlineManageAccounts, MdOutlineRealEstateAgent } from "react-icons/md";
 import { BsCashCoin } from "react-icons/bs";
 import { useEffect, useState } from "react";
+import Loading from "../components/Loading";
 
 const AdminLayout = () => {
-  const { user } = useAuth();
+  const { user,loggingOut, logout } = useAuth();
   const [showAmount, setShowAmount] = useState(false);
   const [sidebarOn, setSidebarOn] = useState(false);
 
@@ -24,8 +25,8 @@ const AdminLayout = () => {
       <div className="flex justify-between items-center border-b pb-4 border-second">
         <div className="flex items-center gap-2">
           <button
-          onClick={() => setSidebarOn(true)}
-            className="text-white bg-second/90 hover:bg-second focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
+            onClick={() => setSidebarOn(true)}
+            className="text-white bg-second/90 hover:bg-second focus:ring-4 focus:ring-second font-medium rounded-lg text-sm px-3 py-2.5"
             type="button"
             data-drawer-target="drawer-disable-body-scrolling"
             data-drawer-show="drawer-disable-body-scrolling"
@@ -85,33 +86,38 @@ const AdminLayout = () => {
           </svg>
           <span className="sr-only">Close menu</span>
         </button>
-        <div className="py-4 overflow-y-auto">
-          <ul className="space-y-2 font-medium">
-            <li>
-              <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <svg
-                  className="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 18 16"
+  
+          <div className="py-4 overflow-y-auto">
+            <ul className="space-y-2 font-medium">
+              <li>
+                <button
+                  onClick={() => logout()}
+                  disabled={loggingOut}
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
-                  />
-                </svg>
-                <span className="flex-1 ms-3 whitespace-nowrap">Log Out</span>
-              </a>
-            </li>
-          </ul>
-        </div>
+                  <svg
+                    className="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 18 16"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
+                    />
+                  </svg>
+                  <span className="flex-1 ms-3 whitespace-nowrap">
+                    Log Out {loggingOut && <Loading />}
+                  </span>
+                </button>
+              </li>
+            </ul>
+          </div>
+       
       </div>
 
       {/* main section */}
