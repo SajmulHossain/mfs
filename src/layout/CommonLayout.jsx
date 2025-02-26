@@ -9,6 +9,7 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
 import { formatDistanceToNowStrict } from "date-fns";
 import useBalance from "../hooks/useBalance";
+import toast from "react-hot-toast";
 
 const CommonLayout = () => {
   const { user, loggingOut, logout } = useAuth();
@@ -16,15 +17,15 @@ const CommonLayout = () => {
   const [showAmount, setShowAmount] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const axiosSecure = useAxiosSecure();
-  const {balance, isLoading:balanceLoading } = useBalance();
+  const { balance, isLoading: balanceLoading } = useBalance();
 
-  const {data:notifications=[], isLoading} = useQuery({
-    queryKey: ['notifications'],
+  const { data: notifications = [], isLoading } = useQuery({
+    queryKey: ["notifications"],
     queryFn: async () => {
-      const { data } = await axiosSecure('/notifications');
+      const { data } = await axiosSecure("/notifications");
       return data;
-    }
-  })
+    },
+  });
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -58,7 +59,9 @@ const CommonLayout = () => {
           ) : (
             <button
               onClick={() => setShowAmount(true)}
-              className={`bg-main w-fit btn rounded-md px-2 py-1 text-white h-auto max-w-lg transition-all duration-300 cursor-pointer ${
+              className={`bg-main w-fit btn rounded-md ${
+                user?.role === "admin" ? "hidden" : "flex"
+              } px-2 py-1 text-white h-auto max-w-lg transition-all duration-300 cursor-pointer ${
                 showAmount ? "blur-none" : "blur-sm"
               }`}
             >
@@ -159,11 +162,12 @@ const CommonLayout = () => {
             <li>
               <button
                 onClick={() => {
-                  logout();
                   setSidebarOn(false);
+                  logout();
+                  toast.success("Logout Successful!");
                 }}
                 disabled={loggingOut}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center gap-2 w-full p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
                   className="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -180,8 +184,8 @@ const CommonLayout = () => {
                     d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
                   />
                 </svg>
-                <span className="flex-1 ms-3 whitespace-nowrap">
-                  Log Out {loggingOut && <Loading />}
+                <span className="flex gap-4 items-center">
+                  Log Out {loggingOut && <Loading crud={true} />}
                 </span>
               </button>
             </li>

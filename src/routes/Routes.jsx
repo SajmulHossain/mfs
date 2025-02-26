@@ -11,6 +11,9 @@ import CashIn from "../layout/AgentPages/CashIn";
 import AgentRoute from "./AgentRoute";
 import Cashout from "../layout/UserPages/Cashout";
 import Transaction from "../layout/Transaction";
+import UserDetails from "../layout/AdminPages/UserDetails";
+import RequestMoney from "../layout/AgentPages/RequestMoney";
+import Withdraw from "../layout/AgentPages/Withdraw";
 
 
 const routes = createBrowserRouter([
@@ -51,12 +54,30 @@ const routes = createBrowserRouter([
         ),
       },
       {
-        path: '/cash-out',
-        element: <Cashout />
+        path: "/cash-out",
+        element: <Cashout />,
       },
       {
-        path: '/transactions',
-        element: <Transaction />
+        path: "/transactions",
+        element: <Transaction />,
+      },
+      {
+        path: "/user/details/:number",
+        element: (
+          <AdminRoute>
+            <UserDetails />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/request-money",
+        element: <AgentRoute>
+          <RequestMoney />
+        </AgentRoute>
+      },
+      {
+        path:'/withdraws',
+        element: <Withdraw />
       }
     ],
   },

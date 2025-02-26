@@ -3,7 +3,6 @@ import { useState } from "react";
 import AuthContext from "./AuthContext";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 import error from "../utils/errorToast";
 
 const AuthProvider = ({ children }) => {
@@ -14,6 +13,7 @@ const AuthProvider = ({ children }) => {
 
   const { isLoading } = useQuery({
     queryKey: ['user'],
+    enabled: !!localStorage.getItem("user"),
     queryFn: async() => {
       const { data } = await axiosSecure("/user");
       if (data?.success) {
@@ -34,11 +34,12 @@ const AuthProvider = ({ children }) => {
   queryFn: async() => {
     const { data } = await axiosSecure('/logout');
     if(data?.success) {
-      toast.success("Logout Successful!");
       setUser(null);
+      localStorage.removeItem('user');
     } else {
       error()
     }
+    return data;
   }
  })
   const data = {

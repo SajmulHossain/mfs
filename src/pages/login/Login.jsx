@@ -22,6 +22,7 @@ const Login = () => {
         setRole(role);
         setUser(data?.user);
         navigate("/");
+        localStorage.setItem("user", true);
       } else {
         error();
       }

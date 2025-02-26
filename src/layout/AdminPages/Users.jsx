@@ -16,11 +16,10 @@ const Users = () => {
     setSearch(text);
   }
 
-  const { data: users = [], isLoading } = useQuery({
+  const { data: users = [], isLoading, refetch } = useQuery({
     queryKey: ["users", search],
     queryFn: async () => {
       const { data } = await axiosSecure(`/users?search=${search}`);
-      console.log(data);
       return data;
     },
   });
@@ -95,14 +94,17 @@ const Users = () => {
             </tr>
           </thead>
           <tbody>
-            {
-              (users?.length) ? users?.map((user) => (
-              <UserRow key={user?._id} user={user} />
-            )) : <tr>
-              <td colSpan={5} className="py-4">No Data Found</td>
-            </tr>
-            }
-            
+            {users?.length ? (
+              users?.map((user) => (
+                <UserRow key={user?._id} user={user} refetch={refetch} />
+              ))
+            ) : (
+              <tr>
+                <td colSpan={5} className="py-4">
+                  No Data Found
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

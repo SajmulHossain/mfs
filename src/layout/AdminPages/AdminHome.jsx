@@ -20,7 +20,7 @@ const AdminHome = () => {
     }
   })
 
-  console.log(states);
+  
   return (
     <div>
       <div
