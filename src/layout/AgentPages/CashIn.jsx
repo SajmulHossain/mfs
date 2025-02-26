@@ -17,9 +17,8 @@ const CashIn = () => {
     mutationKey: ['cash in'],
     mutationFn: async (info) => {
       const {data} = await axiosSecure.patch("/cash-in", info);
-      console.log(data);
       if(data?.success) {
-        toast.success("Cash in successful!");
+        toast.success("Cash out successful!");
         navigate('/');
       } else {
         error();
@@ -44,6 +43,11 @@ const CashIn = () => {
     if(number.length !== 11) {
       return error('Number should be 11 digits')
     }
+
+    if (isNaN(pin)) {
+      return error("PIN should be number!");
+    }
+
 
     if(amount > user?.balance) {
       return error('Insufficient Balance!');
@@ -103,7 +107,7 @@ const CashIn = () => {
             Agent PIN
           </label>
           <input
-            type="number"
+            type="password"
             id="pin"
             name="pin"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"

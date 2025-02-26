@@ -55,7 +55,7 @@ const CommonLayout = () => {
               showAmount ? "blur-none" : "blur-sm"
             }`}
           >
-            <TbCoinTaka /> {user?.balance}
+            <TbCoinTaka /> {user?.balance.toFixed(2)}
           </button>
         </div>
         <div className="flex gap-2 items-center">

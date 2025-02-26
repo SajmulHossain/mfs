@@ -4,7 +4,7 @@ import CommonLayout from "./CommonLayout";
 
 const UserLayout = () => {
   return (
-    <section className="layout">
+    <section className="layout hide-scrollbar">
       <CommonLayout />
 
       <section className="px-4">
