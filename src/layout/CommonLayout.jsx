@@ -3,9 +3,11 @@ import useAuth from "../hooks/useAuth";
 import Loading from "../components/Loading";
 import { FaBars } from "react-icons/fa";
 import { TbCoinTaka } from "react-icons/tb";
-import { IoNotificationsOutline } from "react-icons/io5";
+import { IoLinkSharp, IoNotificationsOutline } from "react-icons/io5";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
+import { formatDistanceToNowStrict } from "date-fns";
 
 const CommonLayout = () => {
   const { user, loggingOut, logout } = useAuth();
@@ -63,13 +65,45 @@ const CommonLayout = () => {
           </button>
         </div>
 
-        <div className={`absolute right-0 top-10 w-[250px] min-h-[200px] bg-main p-2 rounded-md text-white ${showNotification ? 'block' : 'hidden'}`}>
+        <div
+          className={`absolute right-0 top-10 w-[250px] min-h-[200px] max-h-[300px] overflow-y-auto custom-scrollbar bg-second/70 p-2 rounded-md text-white ${
+            showNotification ? "block" : "hidden"
+          }`}
+        >
           <p className="font-semibold border-b">Notifications</p>
-          {
-            notifications?.length ? '':<div className="flex justify-center items-center min-h-[150px]">
+          {isLoading ? (
+            <div className="w-full flex justify-center items-center h-[150px]">
+              <Loading crud={true} />
+            </div>
+          ) : notifications?.length ? (
+            <div className="py-2 space-y-2">
+              {notifications.map((notice) => (
+                <div
+                  key={notice?._id}
+                  className="bg-main/70 rounded-md px-4 py-2"
+                >
+                  <div className="flex justify-between items-center">
+                    <p>{notice?.message}</p>
+                    {notice?.route && (
+                      <Link to={notice?.route}>
+                        <IoLinkSharp />
+                      </Link>
+                    )}
+                  </div>
+                  <p className="font-light text-xs">
+                    {formatDistanceToNowStrict(
+                      new Date(notice?.timeStamp || new Date())
+                    )}{" "}
+                    ago
+                  </p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex justify-center items-center min-h-[150px]">
               <p>No notifications found...</p>
             </div>
-          }
+          )}
         </div>
       </div>
 

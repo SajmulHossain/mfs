@@ -29,7 +29,7 @@
 
 
 .custom-scrollbar::-webkit-scrollbar {
-  @apply h-2 w-3;
+  @apply h-2 w-2;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
