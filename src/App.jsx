@@ -24,7 +24,7 @@ const App = () => {
    return <Disabled />;
  }
 
- if(role === 'agent' && user?.agentStatus === 'pending') {
+ if(role === 'agent' && user?.agentStatus === 'pending' || user?.agentStatus === 'rejected' ) {
   return <BlockAgent />
  }
  

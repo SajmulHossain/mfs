@@ -8,7 +8,7 @@ import AgentReqRow from "./AgentReqRow";
 const AgentRequest = () => {
   const axiosSecure = useAxiosSecure();
   
-  const {data:requests=[], isLoading} = useQuery({
+  const {data:requests=[], isLoading, refetch} = useQuery({
     queryKey: ["agent-requests"],
     queryFn:async() => {
       const { data } = await axiosSecure("/agent-requests");
@@ -18,8 +18,8 @@ const AgentRequest = () => {
 
    if (isLoading) {
      return (
-       <div className="flex justify-center items-center min-h-[calc(100vh-500px)]">
-         <Loading />
+       <div className="flex justify-center items-center min-h-[calc(100vh-100px)]">
+         <Loading crud={true} />
        </div>
      );
    }
@@ -46,7 +46,9 @@ const AgentRequest = () => {
           </thead>
           <tbody>
             {requests?.length ? (
-              requests?.map((req) => <AgentReqRow key={req?._id} request={req} />)
+              requests?.map((req) => (
+                <AgentReqRow key={req?._id} refetch={refetch} request={req} />
+              ))
             ) : (
               <tr>
                 <td colSpan={5} className="py-4">

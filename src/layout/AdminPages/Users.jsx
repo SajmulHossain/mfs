@@ -27,8 +27,8 @@ const Users = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-[calc(100vh-500px)]">
-        <Loading />
+      <div className="flex justify-center items-center min-h-[calc(100vh-100px)]">
+        <Loading crud={true} />
       </div>
     );
   }
