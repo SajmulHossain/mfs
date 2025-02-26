@@ -20,6 +20,23 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+
+.custom-scrollbar::-webkit-scrollbar {
+  @apply h-2 w-3;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-main/70 rounded-md;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-main/70;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  @apply bg-main/90;
+}
 }
 
 @theme {
