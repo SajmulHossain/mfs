@@ -7,18 +7,21 @@ import error from "../../utils/errorToast";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import useBalance from "../../hooks/useBalance";
 
 const Cashout = () => {
   const { user } = useAuth();
   const [totalCost, setTotalCost] = useState(0);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
+  const { refetch,balance } = useBalance();
 
   const {isPending, mutateAsync} = useMutation({
     mutationKey: ['cash out'],
     mutationFn: async (info) => {
       const { data } = await axiosSecure.patch('/cash-out', info);
       if (data?.success) {
+        refetch();
         toast.success("Cash in successful!");
         navigate("/");
       } else {
@@ -76,7 +79,7 @@ const Cashout = () => {
         </thead>
         <tbody className="text-center">
           <tr>
-            <td className="border border-second py-1">{user?.balance}</td>
+            <td className="border border-second py-1">{balance.toFixed(2)}</td>
             <td className="border border-second py-1">{totalCost.toFixed(2)}</td>
             <td className="border border-second py-1">{(totalCost/.015 + totalCost).toFixed(2)}</td>
           </tr>
@@ -130,7 +133,7 @@ const Cashout = () => {
               id="pin"
               name="pin"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              placeholder="Amount"
+              placeholder="PIN"
               required
             />
           </div>

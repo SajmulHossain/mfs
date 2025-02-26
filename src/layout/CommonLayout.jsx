@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
 import { formatDistanceToNowStrict } from "date-fns";
+import useBalance from "../hooks/useBalance";
 
 const CommonLayout = () => {
   const { user, loggingOut, logout } = useAuth();
@@ -15,6 +16,7 @@ const CommonLayout = () => {
   const [showAmount, setShowAmount] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const axiosSecure = useAxiosSecure();
+  const {balance, isLoading:balanceLoading } = useBalance();
 
   const {data:notifications=[], isLoading} = useQuery({
     queryKey: ['notifications'],
@@ -49,14 +51,20 @@ const CommonLayout = () => {
             <FaBars />
           </button>
 
-          <button
-            onClick={() => setShowAmount(true)}
-            className={`bg-main w-fit btn rounded-md px-2 py-1 text-white h-auto max-w-lg transition-all duration-300 cursor-pointer ${
-              showAmount ? "blur-none" : "blur-sm"
-            }`}
-          >
-            <TbCoinTaka /> {user?.balance.toFixed(2)}
-          </button>
+          {balanceLoading ? (
+            <div className="w-8 h-4 animate-pulse">
+              <p className="bg-main/50"></p>
+            </div>
+          ) : (
+            <button
+              onClick={() => setShowAmount(true)}
+              className={`bg-main w-fit btn rounded-md px-2 py-1 text-white h-auto max-w-lg transition-all duration-300 cursor-pointer ${
+                showAmount ? "blur-none" : "blur-sm"
+              }`}
+            >
+              <TbCoinTaka /> {balance.toFixed(2)}
+            </button>
+          )}
         </div>
         <div className="flex gap-2 items-center">
           <p className="font-bold">{user?.name}</p>

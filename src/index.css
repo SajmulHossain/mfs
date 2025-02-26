@@ -11,7 +11,7 @@
 
 @layer components {
   .layout {
-    @apply max-w-[450px] mx-auto border-8 overflow-x-hidden border-second rounded-4xl h-[600px] mt-10;
+    @apply max-w-[450px] mx-auto border-8 overflow-x-hidden border-second rounded-4xl h-[600px] mt-10 overflow-y-auto;
   }
 
   .btn {

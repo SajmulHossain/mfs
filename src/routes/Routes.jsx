@@ -10,6 +10,7 @@ import AgentRequest from "../layout/AdminPages/AgentRequest";
 import CashIn from "../layout/AgentPages/CashIn";
 import AgentRoute from "./AgentRoute";
 import Cashout from "../layout/UserPages/Cashout";
+import Transaction from "../layout/Transaction";
 
 
 const routes = createBrowserRouter([
@@ -52,6 +53,10 @@ const routes = createBrowserRouter([
       {
         path: '/cash-out',
         element: <Cashout />
+      },
+      {
+        path: '/transactions',
+        element: <Transaction />
       }
     ],
   },
