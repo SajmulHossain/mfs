@@ -7,6 +7,8 @@ import AdminRoute from "./AdminRoute";
 import Users from "../layout/AdminPages/Users";
 import Home from "../pages/Home";
 import AgentRequest from "../layout/AdminPages/AgentRequest";
+import CashIn from "../layout/AgentPages/CashIn";
+import AgentRoute from "./AgentRoute";
 
 
 const routes = createBrowserRouter([
@@ -20,7 +22,7 @@ const routes = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />
+        element: <Home />,
       },
       {
         path: "/users",
@@ -31,11 +33,21 @@ const routes = createBrowserRouter([
         ),
       },
       {
-        path: '/agent-requests',
-        element: <AdminRoute>
-          <AgentRequest />
-        </AdminRoute>
-      }
+        path: "/agent-requests",
+        element: (
+          <AdminRoute>
+            <AgentRequest />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/cash-in",
+        element: (
+          <AgentRoute>
+            <CashIn />
+          </AgentRoute>
+        ),
+      },
     ],
   },
   {

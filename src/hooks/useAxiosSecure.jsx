@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 
 export const axiosSecure = axios.create({
@@ -14,7 +15,12 @@ const useAxiosSecure = () => {
       return res
     }, async error => {
       if(error.response?.status === 401 || error.response?.status === 403) {
-        console.log('kire');
+        const { data } = await axiosSecure("/logout");
+        if (data?.success) {
+          toast.success("Logout Successful!");
+        } else {
+          error();
+        }
       }
 
       return Promise.reject(error)

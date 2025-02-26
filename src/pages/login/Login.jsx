@@ -45,9 +45,8 @@ const Login = () => {
 
     try {
      await mutateAsync(authData)
-    } catch (err) {
-      error(err.message)
-      console.log(err);
+    } catch ({response}) {
+      error(response?.data?.message);
     }
 
 

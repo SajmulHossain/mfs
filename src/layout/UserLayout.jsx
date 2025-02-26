@@ -1,10 +1,15 @@
-import Loading from "../components/Loading";
+import { Outlet } from "react-router-dom";
+import CommonLayout from "./CommonLayout";
 
 
 const UserLayout = () => {
   return (
     <section className="layout">
-      <Loading crud={true} />
+      <CommonLayout />
+
+      <section className="px-4">
+        <Outlet />
+      </section>
     </section>
   );
 };

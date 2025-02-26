@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Nav = () => {
   const navigate = useNavigate();
   return (
-    <div className="py-4 flex gap-2">
+    <div className="pb-4 flex gap-2">
       <button
         onClick={() => navigate(-1)}
         className="btn bg-main p-1 rounded-full text-white"
