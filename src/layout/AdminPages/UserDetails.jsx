@@ -32,8 +32,9 @@ const UserDetails = () => {
         <table className="w-full border border-second">
           <thead className="bg-main text-white">
             <tr>
-              <th className="px-4 py-1 border border-main">User Number</th>
-              <th className="px-4 py-1 border border-main">Agent Number</th>
+              <th className="px-4 py-1 border border-main">Transaction ID</th>
+              <th className="px-4 py-1 border border-main">Sender</th>
+              <th className="px-4 py-1 border border-main">Receiver</th>
               <th className="px-4 py-1 border border-main">Amount</th>
               <th className="px-4 py-1 border border-main">Charge</th>
               <th className="px-4 py-1 border border-main">Type</th>

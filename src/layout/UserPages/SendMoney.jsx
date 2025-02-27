@@ -51,6 +51,10 @@ const SendMoney = () => {
       return error("Amount cannot be 0 or negative");
     }
 
+    if(amount < 50) {
+      return error("Minimum amount should be 50 taka!")
+    }
+
     if(isNaN(pin)) {
       return error('PIN should be number!');
     }

@@ -69,8 +69,8 @@ const CommonLayout = () => {
             </button>
           )}
         </div>
-        <div className="flex gap-2 items-center">
-          <p className="font-bold">{user?.name}</p>
+        <div className="flex gap-3 items-center">
+          <p className="font-bold text-right">{user?.name}</p>
           <button onClick={() => setShowNotification(!showNotification)}>
             <IoNotificationsOutline size={24} />
           </button>
