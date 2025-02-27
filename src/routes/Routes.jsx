@@ -15,6 +15,7 @@ import UserDetails from "../layout/AdminPages/UserDetails";
 import RequestMoney from "../layout/AgentPages/RequestMoney";
 import Withdraw from "../layout/AgentPages/Withdraw";
 import WithdrawRequest from "../layout/AdminPages/WithdrawRequest";
+import MoneyRequest from "../layout/AdminPages/MoneyRequest";
 
 
 const routes = createBrowserRouter([
@@ -61,6 +62,12 @@ const routes = createBrowserRouter([
       {
         path: "/transactions",
         element: <Transaction />,
+      },
+      {
+        path: '/money-requests',
+        element: <AdminRoute>
+          <MoneyRequest />
+        </AdminRoute>
       },
       {
         path: "/user/details/:number",

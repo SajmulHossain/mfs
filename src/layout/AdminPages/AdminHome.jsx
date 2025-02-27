@@ -1,5 +1,3 @@
-
-
 import {
   MdOutlineManageAccounts,
   MdOutlineRealEstateAgent,
@@ -13,15 +11,14 @@ import { FaMoneyBillTrendUp } from "react-icons/fa6";
 
 const AdminHome = () => {
   const axiosSecure = useAxiosSecure();
-  const {data:states={}, isLoading} = useQuery({
-    queryKey: ['states'],
-    queryFn: async() => {
-      const {data} = await axiosSecure('/states');
+  const { data: states = {}, isLoading } = useQuery({
+    queryKey: ["states"],
+    queryFn: async () => {
+      const { data } = await axiosSecure("/states");
       return data || {};
-    }
-  })
+    },
+  });
 
-  
   return (
     <div>
       <div
@@ -74,18 +71,18 @@ const AdminHome = () => {
           <MdOutlineRealEstateAgent size={60} />
           <span className="font-semibold text-xs">Agent Request</span>
         </Link>
-        <button className="btn justify-self-center flex-col transition-all duration-200 gap-0 hover:bg-main/20 p-4 rounded-md">
+        <Link to='/money-requests' className="btn justify-self-center flex-col transition-all duration-200 gap-0 hover:bg-main/20 p-4 rounded-md">
           <BsCashCoin size={60} />
-          <span className="font-semibold text-xs">Cash In Request</span>
-        </button>
+          <span className="font-semibold text-xs">Money Request</span>
+        </Link>
 
-         <Link
-                to="/withdraw-requests"
-                className="btn justify-self-center flex-col transition-all duration-200 gap-0 hover:bg-main/20 p-4 rounded-md"
-              >
-                <FaMoneyBillTrendUp size={60} />
-                <span className="font-semibold text-xs mt-1">Withdraw Request</span>
-              </Link>
+        <Link
+          to="/withdraw-requests"
+          className="btn justify-self-center flex-col transition-all duration-200 gap-0 hover:bg-main/20 p-4 rounded-md"
+        >
+          <FaMoneyBillTrendUp size={60} />
+          <span className="font-semibold text-xs mt-1">Withdraw Request</span>
+        </Link>
       </div>
     </div>
   );

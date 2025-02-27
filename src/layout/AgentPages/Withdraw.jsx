@@ -16,6 +16,7 @@ const Withdraw = () => {
     mutationKey: ["withdraw"],
     mutationFn: async (info) => {
       const { data } = await axiosSecure.post("/withdraws", info);
+      console.log(data);
       if(data?._id) {
         toast.success("Request sent!");
         navigate('/');

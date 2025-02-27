@@ -1,15 +1,49 @@
+import { useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import error from "../../utils/errorToast";
 import Nav from "../AdminPages/Nav";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import Loading from "../../components/Loading";
 
 
 const RequestMoney = () => {
-  const handleRequest = (e) => {
+ const axiosSecure = useAxiosSecure();
+ const navigate = useNavigate();
+
+ const { mutateAsync, isPending } = useMutation({
+   mutationKey: ["withdraw"],
+   mutationFn: async (info) => {
+     const { data } = await axiosSecure.post("/money-request", info);
+     console.log(data);
+     if (data?._id) {
+       toast.success("Request sent!");
+       navigate("/");
+     } else {
+       error();
+     }
+   },
+ });
+
+  const handleRequest = async (e) => {
     e.preventDefault();
 
     const pin = e.target.pin.value;
 
-    if(!pin || pin.length !== 5) {
-      return error('PIN should be 5 digits number!');
+    if (isNaN(pin) || pin.length !== 5) {
+      return error("PIN should be 5 digits number!");
+    }
+
+    const data = {
+      pin,
+    };
+
+
+    try {
+      await mutateAsync(data);
+    } catch (err) {
+      error(err?.response?.data?.message);
+      console.log(err);
     }
   }
   return (
@@ -52,11 +86,10 @@ const RequestMoney = () => {
         </div>
         <button
           type="submit"
-          // disabled={isPending}
+          disabled={isPending}
           className="text-white btn bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
-          Submit 
-          {/* {isPending && <Loading crud={true} />} */}
+          Submit {isPending && <Loading crud={true} />}
         </button>
       </form>
     </div>

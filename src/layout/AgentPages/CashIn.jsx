@@ -18,7 +18,7 @@ const CashIn = () => {
     mutationFn: async (info) => {
       const {data} = await axiosSecure.patch("/cash-in", info);
       if(data?.success) {
-        toast.success("Cash out successful!");
+        toast.success("Cash in successful!");
         navigate('/');
       } else {
         error();

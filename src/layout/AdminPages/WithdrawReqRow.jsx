@@ -7,15 +7,25 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import error from "../../utils/errorToast";
 import Loading from "../../components/Loading";
+import { useLocation } from "react-router-dom";
 
 const WithdrawReqRow = ({ request, refetch }) => {
   const { name, agentNumber, amount, _id } = request || {};
   const axiosSecure = useAxiosSecure();
+  const { pathname } = useLocation();
+
 
   const { mutateAsync, isPending } = useMutation({
     mutationKey: ["withdraw-approval"],
     mutationFn: async (info) => {
-      const { data } = await axiosSecure.patch(`/withdraw/${_id}`, info);
+      const { data } = await axiosSecure.patch(
+        `${
+          pathname === "/money-requests"
+            ? `/money-request/${_id}`
+            : `/withdraw/${_id}`
+        }`,
+        info
+      );
       if (data?.success) {
         toast.success("Operation Successful!");
         refetch();
