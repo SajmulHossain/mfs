@@ -53,7 +53,7 @@ const Login = () => {
 
   }
   return (
-    <section className="layout">
+    <section className="layout px-4">
       <div className='my-5'>
         <img src={logo} alt="logo" />
       </div>

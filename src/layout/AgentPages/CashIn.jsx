@@ -48,6 +48,10 @@ const CashIn = () => {
       return error("PIN should be number!");
     }
 
+    if (amount <= 0) {
+      return error("Amount cannot be 0 or negative");
+    }
+
 
     if(amount > user?.balance) {
       return error('Insufficient Balance!');
@@ -66,6 +70,7 @@ const CashIn = () => {
   return (
     <div>
       <Nav />
+      <h3 className="font-semibold mb-2">Cash In:</h3>
       <form onSubmit={handleCashIn} className="max-w-sm mx-auto">
         <div className="mb-5">
           <label
@@ -120,7 +125,7 @@ const CashIn = () => {
           disabled={isPending}
           className="text-white btn bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
-          Submit {isPending && <Loading crud={true} />}
+          Cash In {isPending && <Loading crud={true} />}
         </button>
       </form>
     </div>

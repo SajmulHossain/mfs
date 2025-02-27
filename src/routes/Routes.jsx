@@ -16,6 +16,7 @@ import RequestMoney from "../layout/AgentPages/RequestMoney";
 import Withdraw from "../layout/AgentPages/Withdraw";
 import WithdrawRequest from "../layout/AdminPages/WithdrawRequest";
 import MoneyRequest from "../layout/AdminPages/MoneyRequest";
+import SendMoney from "../layout/UserPages/SendMoney";
 
 
 const routes = createBrowserRouter([
@@ -98,6 +99,10 @@ const routes = createBrowserRouter([
         element: <AdminRoute>
           <WithdrawRequest />
         </AdminRoute>
+      },
+      {
+        path: '/send-money',
+        element: <SendMoney />
       }
     ],
   },

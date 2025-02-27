@@ -72,7 +72,7 @@ const Register = () => {
     }
   }
   return (
-    <section className="layout">
+    <section className="layout px-4">
       <div>
         <img src={logo} className="h-28 mx-auto" alt="logo" />
       </div>

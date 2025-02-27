@@ -1,36 +1,37 @@
 import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
-import { useMutation } from "@tanstack/react-query";
+import useBalance from "../../hooks/useBalance";
+import error from "../../utils/errorToast";
 import Nav from "../AdminPages/Nav";
 import Loading from "../../components/Loading";
-import error from "../../utils/errorToast";
+import { useMutation } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import useBalance from "../../hooks/useBalance";
+import { useNavigate } from "react-router-dom";
 
-const Cashout = () => {
+
+const SendMoney = () => {
   const { user } = useAuth();
-  const [totalCost, setTotalCost] = useState(0);
+  const {balance, refetch:loadBalance} = useBalance();
+  const [money, setMoney] = useState(0);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-  const { refetch,balance } = useBalance();
-
-  const {isPending, mutateAsync} = useMutation({
-    mutationKey: ['cash out'],
-    mutationFn: async (info) => {
-      const { data } = await axiosSecure.patch('/cash-out', info);
-      if (data?.success) {
-        refetch();
-        toast.success("Cash in successful!");
-        navigate("/");
+  
+  const {mutateAsync, isPending} = useMutation({
+    mutationKey: ['send-money'],
+    mutationFn: async(info) => {
+      const { data } = await axiosSecure.patch("/send-money", info);
+      if(data?.success) {
+        loadBalance();
+        toast.success("Send Money Successful!")
+        navigate('/transactions');
       } else {
         error();
       }
     }
-  }) ;
+  })
 
-  const handleCashout = async e => {
+   const handleSendMoney = async e => {
     e.preventDefault();
 
     const form = e.target;
@@ -46,15 +47,15 @@ const Cashout = () => {
       return error("Number should be 11 digits");
     }
 
+    if(amount <= 0) {
+      return error("Amount cannot be 0 or negative");
+    }
+
     if(isNaN(pin)) {
       return error('PIN should be number!');
     }
 
-    if (amount <= 0) {
-      return error("Amount cannot be 0 or negative");
-    }
-
-    if ((+amount + +totalCost) > user?.balance) {
+    if ((+amount + +money) > user?.balance) {
       return error("Insufficient Balance!");
     }
 
@@ -66,39 +67,46 @@ const Cashout = () => {
 
     try {
       await mutateAsync(data);
-    } catch({response}) {
-      error(response?.data?.message);
+    } catch (err) {
+      error(err?.response?.data?.message);
     }
-  }
+   }  
+
   return (
     <div>
       <Nav />
-      <h3 className="font-semibold mb-2">Cash Out:</h3>
+      <h3 className="font-semibold mb-2">Send Money:</h3>
       <table className="border border-second w-full mb-4">
         <thead>
           <tr>
             <th className="border border-second py-1">Available Money</th>
-            <th className="border border-second py-1">Total Cost(1.5%)</th>
+            <th className="border border-second py-1">
+              Charge <span className="text-xs font-normal">(over 100tk)</span>
+            </th>
             <th className="border border-second py-1">Need Money</th>
           </tr>
         </thead>
         <tbody className="text-center">
           <tr>
             <td className="border border-second py-1">{balance.toFixed(2)}</td>
-            <td className="border border-second py-1">{totalCost.toFixed(2)}</td>
-            <td className="border border-second py-1">{(totalCost/.015 + totalCost).toFixed(2)}</td>
+            <td className="border border-second py-1">
+              {money > 100 ? +money + 5 : 0}
+            </td>
+            <td className="border border-second py-1">
+              {money > 100 ? +money + 5 : money}
+            </td>
           </tr>
         </tbody>
       </table>
 
       <div>
-        <form onSubmit={handleCashout} className="max-w-sm mx-auto">
+        <form onSubmit={handleSendMoney} className="max-w-sm mx-auto">
           <div className="mb-5">
             <label
               htmlFor="number"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
-              Agent Number
+              User Number
             </label>
             <input
               type="number"
@@ -117,7 +125,7 @@ const Cashout = () => {
               Amount
             </label>
             <input
-              onChange={(e) => setTotalCost(e.target.value*0.015)}
+              onChange={(e) => setMoney(e.target.value)}
               type="number"
               id="amount"
               name="amount"
@@ -147,7 +155,7 @@ const Cashout = () => {
             disabled={isPending}
             className="text-white btn bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            Cash Out {isPending && <Loading crud={true} />}
+            Send Money {isPending && <Loading crud={true} />}
           </button>
         </form>
       </div>
@@ -155,4 +163,4 @@ const Cashout = () => {
   );
 };
 
-export default Cashout;
+export default SendMoney;
