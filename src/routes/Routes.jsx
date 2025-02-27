@@ -17,6 +17,7 @@ import Withdraw from "../layout/AgentPages/Withdraw";
 import WithdrawRequest from "../layout/AdminPages/WithdrawRequest";
 import MoneyRequest from "../layout/AdminPages/MoneyRequest";
 import SendMoney from "../layout/UserPages/SendMoney";
+import ErrorPage from "../pages/ErrorPage";
 
 
 const routes = createBrowserRouter([
@@ -105,6 +106,7 @@ const routes = createBrowserRouter([
         element: <SendMoney />
       }
     ],
+    errorElement: <ErrorPage />
   },
   {
     path: "/login",
