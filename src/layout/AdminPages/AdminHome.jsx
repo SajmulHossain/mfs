@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { TbCoinTaka } from "react-icons/tb";
+import { FaMoneyBillTrendUp } from "react-icons/fa6";
 
 const AdminHome = () => {
   const axiosSecure = useAxiosSecure();
@@ -57,7 +58,7 @@ const AdminHome = () => {
           </>
         )}
       </div>
-      <div className="flex justify-between flex-wrap">
+      <div className="grid grid-cols-3 mt-2">
         <Link
           to="/users"
           className="btn justify-self-center flex-col gap-0 transition-all duration-200 hover:bg-main/20 p-4 rounded-md"
@@ -77,6 +78,14 @@ const AdminHome = () => {
           <BsCashCoin size={60} />
           <span className="font-semibold text-xs">Cash In Request</span>
         </button>
+
+         <Link
+                to="/withdraw-requests"
+                className="btn justify-self-center flex-col transition-all duration-200 gap-0 hover:bg-main/20 p-4 rounded-md"
+              >
+                <FaMoneyBillTrendUp size={60} />
+                <span className="font-semibold text-xs mt-1">Withdraw Request</span>
+              </Link>
       </div>
     </div>
   );

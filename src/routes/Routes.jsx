@@ -14,6 +14,7 @@ import Transaction from "../layout/Transaction";
 import UserDetails from "../layout/AdminPages/UserDetails";
 import RequestMoney from "../layout/AgentPages/RequestMoney";
 import Withdraw from "../layout/AgentPages/Withdraw";
+import WithdrawRequest from "../layout/AdminPages/WithdrawRequest";
 
 
 const routes = createBrowserRouter([
@@ -71,13 +72,25 @@ const routes = createBrowserRouter([
       },
       {
         path: "/request-money",
-        element: <AgentRoute>
-          <RequestMoney />
-        </AgentRoute>
+        element: (
+          <AgentRoute>
+            <RequestMoney />
+          </AgentRoute>
+        ),
       },
       {
-        path:'/withdraws',
-        element: <Withdraw />
+        path: "/withdraws",
+        element: (
+          <AgentRoute>
+            <Withdraw />
+          </AgentRoute>
+        ),
+      },
+      {
+        path: '/withdraw-requests',
+        element: <AdminRoute>
+          <WithdrawRequest />
+        </AdminRoute>
       }
     ],
   },
