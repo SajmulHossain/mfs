@@ -24,14 +24,6 @@ const Users = () => {
     },
   });
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-[calc(100vh-100px)]">
-        <Loading crud={true} />
-      </div>
-    );
-  }
-
   return (
     <section>
       <Nav />
@@ -94,13 +86,21 @@ const Users = () => {
             </tr>
           </thead>
           <tbody>
-            {users?.length ? (
+            {isLoading ? (
+              <tr>
+                <td colSpan={6} className="py-4">
+                  <div className="flex justify-center items-center">
+                    <Loading crud={true} />
+                  </div>
+                </td>
+              </tr>
+            ) : users?.length ? (
               users?.map((user) => (
                 <UserRow key={user?._id} user={user} refetch={refetch} />
               ))
             ) : (
               <tr>
-                <td colSpan={5} className="py-4">
+                <td colSpan={6} className="py-4">
                   No Data Found
                 </td>
               </tr>

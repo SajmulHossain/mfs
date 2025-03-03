@@ -23,6 +23,7 @@ import ErrorPage from "../pages/ErrorPage";
 const routes = createBrowserRouter([
   {
     path: "/",
+    errorElement: <ErrorPage />,
     element: (
       <PrivetRoute>
         <App />
@@ -106,7 +107,6 @@ const routes = createBrowserRouter([
         element: <SendMoney />
       }
     ],
-    errorElement: <ErrorPage />
   },
   {
     path: "/login",

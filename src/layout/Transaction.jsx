@@ -36,7 +36,7 @@ const Transaction = () => {
           <tbody className="text-center text-gray-600">
             {!transactions?.length ? (
               <tr>
-                <td colSpan={6} className="py-2 border border-main">
+                <td colSpan={7} className="py-2 border border-main">
                   {isLoading ? (
                     <div className="flex justify-center">
                       <Loading crud={true} />

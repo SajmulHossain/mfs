@@ -21,6 +21,7 @@ const useAxiosSecure = () => {
             error.response?.status === 403
           ) {
             await axiosSecure("/logout");
+            localStorage.removeItem("user");
           }
 
           return Promise.reject(error);
